@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#043b82">
+  <title>تحدي نقطة بداية — لعبة الفريقين</title>
+  <style>
+    :root{--ink:#061a3a;--blue:#043b82;--deep:#021f4f;--cyan:#28bce5;--gold:#c69218;--paper:#f5f2ee;--red:#d6283c;--white:#fff}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--paper)}body{font-family:Tahoma,"Segoe UI",Arial,sans-serif;color:var(--ink);overflow-x:hidden}button,input{font:inherit}
+    button{cursor:pointer}.shell{min-height:100vh;position:relative;isolation:isolate;overflow:hidden;padding:16px 22px 24px;background:radial-gradient(circle at 8% 16%,rgba(40,188,229,.11) 0 2px,transparent 3px) 0 0/25px 25px,radial-gradient(circle at 92% 12%,rgba(4,59,130,.09),transparent 24%),linear-gradient(145deg,#fbfaf8,#eee9e3)}
+    .shell:before,.shell:after{content:"";position:fixed;z-index:-1;border:2px solid rgba(40,188,229,.24);border-radius:50%;width:460px;height:720px;top:18%}.shell:before{left:-390px}.shell:after{right:-390px}
+    .top{max-width:1500px;margin:0 auto 12px;min-height:68px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px}.brands{justify-self:start;display:flex;align-items:center;gap:16px;direction:ltr}.rouqi{direction:rtl;text-align:center;line-height:1}.rouqi b{display:block;color:var(--gold);font-size:1.2rem}.rouqi small{font-size:.58rem}.line{width:1px;height:38px;background:#061a3a55}.smt{font:950 2.1rem/1 Arial,sans-serif;letter-spacing:-3px;color:#050505}.smt i{color:#0877e8;font-style:normal}
+    .title{text-align:center;line-height:.96}.title small{display:block;color:var(--blue);font-size:.7rem}.title strong{display:block;color:var(--blue);font-size:clamp(1.65rem,2.4vw,2.55rem);letter-spacing:-.04em}.title em{display:inline-block;margin-top:7px;padding:4px 12px;border-radius:99px;background:var(--blue);color:#fff;font-size:.65rem;font-style:normal;letter-spacing:.12em}.top-actions{justify-self:end;display:flex;gap:8px}.icon{width:42px;height:42px;border:1px solid #043b822d;border-radius:50%;background:#ffffffb8;color:var(--blue);font-size:1.05rem}
+    .scores{max-width:1500px;margin:0 auto 14px;display:grid;grid-template-columns:minmax(250px,1fr) 215px minmax(250px,1fr);grid-template-areas:"a bank b";gap:12px}.team{border:1px solid #043b8228;border-radius:20px;min-height:92px;padding:12px 18px;background:#ffffffcc;box-shadow:0 14px 35px #021f4f14;display:grid;grid-template-columns:minmax(120px,1fr) 86px;grid-template-rows:1fr auto;align-items:center;transition:.2s}.team.active{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 16px 42px #043b8228,0 0 0 3px #28bce526}.team.a{grid-area:a}.team.b{grid-area:b}.team.b.active{border-color:var(--gold);box-shadow:0 16px 42px #043b8228,0 0 0 3px #c6921826}.team input{border:0;background:transparent;outline:0;color:var(--deep);font-weight:800;font-size:clamp(1rem,1.4vw,1.35rem);width:100%}.team-score{grid-row:1/3;grid-column:2;justify-self:end;font:900 clamp(2.5rem,4vw,3.85rem)/1 Arial;color:var(--blue)}.team.b .team-score{color:#9b6d06}.xs{display:flex;gap:7px;direction:ltr}.xs span{width:22px;height:22px;display:grid;place-items:center;border-radius:6px;background:#e5e3df;color:#aaa;font:900 1rem/1 Arial}.xs span.on{background:var(--red);color:#fff;box-shadow:0 3px 8px #d6283c47}.bank{grid-area:bank;border-radius:22px;background:linear-gradient(145deg,var(--blue),var(--deep));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 16px 42px #021f4f38;padding:8px}.bank span{color:#b9eaff;font-size:.72rem}.bank b{font:900 2.8rem/1 Arial;margin:2px 0}.bank small{max-width:190px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:.72;font-size:.58rem}
+    .game{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:16px;align-items:start}.qbox{border-radius:22px 22px 12px 12px;border:2px solid #28bce5bf;border-bottom:5px solid var(--cyan);padding:14px 24px 17px;background:linear-gradient(145deg,#064993 0%,#021f4f 100%);box-shadow:0 18px 48px #021f4f47,inset 0 0 0 3px #ffffff0f}.meta{display:flex;justify-content:space-between;color:#b9eaff;font-size:.72rem;margin-bottom:6px}.meta span:last-child{color:#ffd66b;font-weight:800}.qbox h1{margin:0;text-align:center;font-size:clamp(1.45rem,2.2vw,2.3rem);line-height:1.35;color:#fff;text-shadow:0 2px 8px #00000047}
+    .board{margin-top:11px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;perspective:1200px}.answer{height:clamp(68px,7.6vh,86px);border:0;padding:0;background:transparent;perspective:900px}.answer:nth-child(5){grid-column:1/-1;width:calc(50% - 5px);justify-self:center}.inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.75,.2,1)}.answer.revealed .inner{transform:rotateX(180deg)}.front,.back{position:absolute;inset:0;backface-visibility:hidden;border-radius:15px;display:flex;align-items:center}.front{justify-content:center;gap:12px;background:linear-gradient(145deg,#064993,#02275e);color:#fff;border:1px solid #ffffff47;box-shadow:inset 0 0 0 4px #28bce51c,0 8px 18px #021f4f2b}.front b{font:900 2rem/1 Arial}.front small{font-size:.62rem;opacity:.55}.back{transform:rotateX(180deg);justify-content:space-between;padding-right:10px;background:#fff;color:var(--deep);border:2px solid var(--cyan);box-shadow:0 10px 24px #021f4f21;overflow:hidden}.back span{font-size:clamp(.9rem,1.25vw,1.22rem);font-weight:800;padding:10px 16px;text-align:right}.back b{align-self:stretch;width:76px;min-width:76px;display:grid;place-items:center;background:linear-gradient(145deg,var(--cyan),#067aa9);color:#fff;font:900 1.75rem/1 Arial}
+    .nav{min-height:50px;margin-top:9px;display:grid;grid-template-columns:145px 1fr 145px;gap:12px;align-items:center}.btn{min-height:40px;border:1px solid #043b8233;border-radius:11px;background:#fff;color:var(--blue);font-weight:700;padding:8px 12px}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.dots{display:flex;gap:5px;justify-content:center;direction:ltr}.dots i{width:6px;height:6px;border-radius:50%;background:#043b822e}.dots i.on{width:20px;border-radius:4px;background:var(--cyan)}
+    .host{border:1px solid #043b8226;border-radius:24px;padding:15px;background:#ffffffc7;box-shadow:0 18px 48px #021f4f1a;backdrop-filter:blur(12px);position:sticky;top:12px}.timer{--p:360deg;width:112px;height:112px;margin:0 auto 10px;border-radius:50%;padding:7px;background:conic-gradient(var(--cyan) var(--p),#dfe4e8 0);box-shadow:0 10px 28px #043b8226}.timer.danger{background:conic-gradient(var(--red) var(--p),#f0dce0 0);animation:pulse .7s ease-in-out infinite alternate}.timer div{width:100%;height:100%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--paper);border:1px solid #043b821a}.timer b{font:900 2.5rem/1 Arial;color:var(--blue)}.timer span{font-size:.65rem;color:#6b7890}.timer-row{display:grid;grid-template-columns:1fr 42px;gap:7px}.group{display:grid;gap:7px;border-top:1px solid #043b821a;padding-top:12px;margin-top:12px}.label{color:#6b7890;font-size:.67rem;font-weight:700}.wrong{background:var(--red);border-color:var(--red);color:#fff}.award{background:linear-gradient(135deg,#c69218,#9b6d06);border:0;color:#fff}.award:disabled{opacity:.38}.split{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tip{margin-top:11px;border-radius:13px;padding:10px 12px;background:#eef4fa;color:#52627a;display:grid;gap:5px;font-size:.61rem}.tip b{color:var(--blue);font-size:.7rem}kbd{background:#fff;color:var(--blue);border:1px solid #d3dce8;border-bottom-width:2px;border-radius:4px;padding:1px 4px;font:700 .56rem Arial}
+    .overlay{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;backdrop-filter:blur(4px)}.overlay.show{display:flex}.strike{background:#020c23b8}.strike .marks{display:flex;gap:18px;direction:ltr}.strike .marks span{font:950 clamp(7rem,17vw,14rem)/.8 Arial;color:var(--red);text-shadow:0 0 25px #fff,0 0 70px #d6283ce6;animation:pop .32s cubic-bezier(.2,1.6,.3,1)}.strike strong{margin-top:28px;color:#fff;font-size:clamp(1.4rem,3vw,2.6rem)}.celebrate{background:#f5f2eeed}.celebrate .emoji{font-size:5rem;animation:pop .5s cubic-bezier(.2,1.6,.3,1)}.celebrate strong{font-size:clamp(1.6rem,4vw,3.3rem);color:var(--deep)}.celebrate small{margin-top:10px;color:var(--gold);font-size:1rem}
+    @keyframes pop{from{transform:scale(.15) rotate(-12deg);opacity:0}to{transform:scale(1);opacity:1}}@keyframes pulse{to{transform:scale(1.045)}}
+    @media(max-width:1050px){.game{grid-template-columns:1fr}.host{position:static;display:grid;grid-template-columns:130px 1fr 1fr;gap:12px;align-items:center}.timer{margin:0;grid-row:1/3}.timer-row{grid-column:2}.group{margin:0;padding:0;border:0}.tip{display:none}}
+    @media(max-width:720px){.shell{padding:10px;overflow:auto}.top{grid-template-columns:1fr auto}.brands{display:none}.title{text-align:right}.scores{grid-template-columns:1fr 1fr;grid-template-areas:"bank bank" "a b"}.bank{min-height:78px}.team{padding:10px;grid-template-columns:1fr 58px}.team-score{font-size:2.2rem}.board{grid-template-columns:1fr}.answer:nth-child(5){grid-column:auto;width:100%}.answer{height:74px}.nav{grid-template-columns:1fr 1fr}.dots{display:none}.host{grid-template-columns:100px 1fr}.timer{width:92px;height:92px}.group{grid-column:1/-1;grid-template-columns:repeat(3,1fr)}.label{grid-column:1/-1}}
+    @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}.inner{transition:none}}
+    /* Full dark-mode event theme */
+    :root{color-scheme:dark;--paper:#07162f;--ink:#edf7ff}
+    html,body{background:#020817;color:#edf7ff}.shell{background:radial-gradient(circle at 8% 16%,rgba(40,188,229,.20) 0 2px,transparent 3px) 0 0/25px 25px,radial-gradient(circle at 90% 8%,rgba(40,188,229,.15),transparent 26%),radial-gradient(circle at 22% 100%,rgba(198,146,24,.12),transparent 28%),linear-gradient(145deg,#020817 0%,#071a38 58%,#020a1c 100%)}.shell:before,.shell:after{border-color:#28bce547}
+    .rouqi small{color:#d9e8f7}.line{background:#ffffff47}.smt{color:#fff}.title small{color:var(--cyan)}.title strong{color:#fff;text-shadow:0 4px 18px #00000059}.title em{background:var(--cyan);color:var(--deep);font-weight:900}.icon{background:#081a38e0;color:#fff;border-color:#28bce566}
+    .team{background:linear-gradient(145deg,#0a2249f5,#05132bf5);border-color:#28bce540;box-shadow:0 16px 42px #0000004d}.team input{color:#fff}.team-score{color:#5fdcff}.team.b .team-score{color:#ffd66b}.xs span{background:#18345b;color:#7790aa}.bank{background:linear-gradient(145deg,#07539f,#021f4f);border:1px solid #28bce559}
+    .qbox{background:linear-gradient(145deg,#07539f 0%,#021a42 100%)}.front{background:linear-gradient(145deg,#07539f,#021c46)}.back{background:linear-gradient(145deg,#0d2a56,#081a38);color:#fff;border-color:#32cdf4}.back span{color:#fff}
+    .btn{background:#0b2147;color:#fff;border-color:#2a557c}.btn.primary{background:var(--blue);border-color:#1a72bd}.dots i{background:#bedef740}.host{background:linear-gradient(145deg,#0a2249f2,#05132bf2);border-color:#28bce540;box-shadow:0 18px 48px #00000057}.timer div{background:#07162f;border-color:#284d76}.timer b{color:#5fdcff}.timer span,.label{color:#abc6de}.tip{background:#0b2147;color:#b8cee2}.tip b{color:#64d9f6}kbd{background:#07162f;color:#7ce5ff;border-color:#31587e}.celebrate{background:#020817f2}.celebrate strong{color:#fff}.celebrate small{color:#ffd66b}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brands"><div class="rouqi"><b>رُقِي</b><small>للاستشارات</small></div><div class="line"></div><div class="smt">SMT<i>.</i></div></div>
+      <div class="title"><small>أمسية</small><strong>نقطة بداية</strong><em>تحدّي الجمهور</em></div>
+      <div class="top-actions"><button class="icon" id="buzzer" title="جرس المسابقة">🔔</button><button class="icon" id="fullscreen" title="ملء الشاشة">⛶</button></div>
+    </header>
+
+    <section class="scores">
+      <div class="team a active" data-team="0"><input id="name0" value="فريق البداية" aria-label="اسم الفريق الأول"><b class="team-score" id="score0">0</b><div class="xs" id="strikes0"></div></div>
+      <div class="team b" data-team="1"><input id="name1" value="فريق الحكاية" aria-label="اسم الفريق الثاني"><b class="team-score" id="score1">0</b><div class="xs" id="strikes1"></div></div>
+      <div class="bank"><span>نقاط الجولة</span><b id="bank">0</b><small id="activeLabel">الفريق النشط: فريق البداية</small></div>
+    </section>
+
+    <section class="game">
+      <div>
+        <div class="qbox"><div class="meta"><span id="counter"></span><span id="category"></span></div><h1 id="question"></h1></div>
+        <div class="board" id="board"></div>
+        <div class="nav"><button class="btn" id="prev">السؤال السابق</button><div class="dots" id="dots"></div><button class="btn primary" id="next">السؤال التالي</button></div>
+      </div>
+
+      <aside class="host">
+        <div class="timer" id="timer"><div><b id="seconds">90</b><span>ثانية</span></div></div>
+        <div class="timer-row"><button class="btn primary" id="timerToggle">ابدأ المؤقت</button><button class="btn" id="timerReset">↻</button></div>
+        <div class="group"><span class="label">التحكم بالجولة</span><button class="btn wrong" id="wrong">✕ محاولة خاطئة</button><button class="btn award" id="award" disabled>🏆 تثبيت نقاط الجولة</button><button class="btn" id="faceoff">🔔 جرس المواجهة</button></div>
+        <div class="group"><span class="label">تعديل نتيجة الفريق النشط</span><div class="split"><button class="btn" id="minus">− 5</button><button class="btn" id="plus">+ 5</button></div><button class="btn" id="resetMatch">↻ مباراة جديدة وأسئلة عشوائية</button></div>
+        <div class="tip"><b>قواعد اللعب</b><span>لكل شخص محاولة واحدة</span><span>بعد 3 محاولات خاطئة ينتقل السؤال تلقائيًا للفريق الآخر</span><span>23 سؤالًا عشوائيًا · 90 ثانية لكل جولة</span><span><kbd>1–5</kbd> كشف · <kbd>X</kbd> خطأ · <kbd>T</kbd> مؤقت</span></div>
+      </aside>
+    </section>
+  </main>
+  <div class="overlay strike" id="strikeOverlay"><div class="marks" id="strikeMarks"></div><strong>محاولة خاطئة!</strong></div>
+  <div class="overlay celebrate" id="turnNotice"><div class="emoji">↔️</div><strong id="turnNoticeText"></strong><small>اكتملت المحاولات الخاطئة — فرصة للفريق الآخر</small></div>
+  <div class="overlay celebrate" id="celebrate"><div class="emoji">🎉</div><strong id="celebrateText"></strong><small>نقطة بداية جميلة!</small></div>
+
+  <script>
+    // يمكن تعديل الأسئلة والإجابات والنقاط مباشرة من هذه القائمة.
+    const QUESTION_POOL=[
+      {c:"قبل الخروج",q:"اذكر شيئًا الرجل والمرأة ممكن يختلفون عليه قبل ما يطلعون من البيت.",a:[["التأخير",30],["وين بيروحون",25],["اللبس",19],["من يسوق",14],["شو ياخذون وياهم",12]]},
+      {c:"العلاقات",q:"اذكر جملة تسمعها في العلاقة وتعرف أن وراها سالفة طويلة.",a:[["لازم نتكلم",34],["عندي سؤال",24],["تذكر يوم…؟",18],["بقولك شي بس لا تعصب",14],["خلني أسألك بصراحة",10]]},
+      {c:"الدوام",q:"اذكر شيئًا يتغير في الموظف فورًا إذا دخل المدير الغرفة.",a:[["يقعد عدل",30],["يفتح ملف الشغل",25],["يسكر تلفونه",20],["يصير مركز فجأة",15],["تتغير نبرة صوته",10]]},
+      {c:"الدوام",q:"اذكر أول شيء ممكن يسويه الموظف إذا عرف أن المدير اليوم مب موجود.",a:[["يرتاح",28],["يطول في القهوة",24],["يسولف أكثر",20],["يمسك التلفون",16],["يخطط يطلع بدري",12]]},
+      {c:"زملاء العمل",q:"اذكر جملة يقولها زميلك في الدوام وتعرف بعدها أنك بتسوي شغله.",a:[["عندي طلب بسيط",31],["إذا ما عليك أمر",24],["بس دقيقة",19],["أنت أسرع مني فيها",15],["آخر مرة والله",11]]},
+      {c:"أمنيات الموظف",q:"اذكر شيئًا الموظف يتمنى يسمعه من مديره.",a:[["روحوا اليوم بدري",34],["باچر إجازة",25],["في مكافأة",19],["الاجتماع ملغي",13],["ما يحتاج تحضر",9]]},
+      {c:"شخصيات الدوام",q:"اذكر نوع موظف موجود تقريبًا في كل مكان عمل.",a:[["اللي يعرف أخبار الجميع",28],["اللي دايم مستعيل",23],["اللي دايم ياكل",19],["اللي ما تعرف شو وظيفته بالضبط",17],["اللي يقول أنا طالع ويظل نص ساعة",13]]},
+      {c:"الحياة الزوجية",q:"اذكر شيئًا الزوج يقول إنه يعرف مكانه… وبعدها يسأل زوجته وينه.",a:[["المفاتيح",27],["الملابس",24],["الشاحن",20],["المحفظة",16],["أغراض المطبخ",13]]},
+      {c:"العزائم",q:"اذكر شيئًا يحدث في كل عزيمة عائلية تقريبًا.",a:[["أحد يقول: كل أكثر",27],["سؤال: متى وصلت؟",23],["تصوير الأكل",19],["أحد يتأخر",17],["نقاش على من ياخذ الباقي",14]]},
+      {c:"البيت",q:"اذكر شيئًا تقول إنك بترتبه في البيت باچر من أسبوع.",a:[["الدولاب",29],["الأوراق",23],["المخزن",19],["الأدراج",16],["الصور في التلفون",13]]},
+      {c:"مواقف اجتماعية",q:"اذكر شيئًا تسويه إذا شفت شخص تعرفه من بعيد وما لك خلق تسلم.",a:[["أمسك التلفون فورًا",31],["أغير الطريق",25],["أطالع مكان ثاني",19],["أسوي نفسي ما شفته",15],["أختبئ ورا شخص",10]]},
+      {c:"نسيان الأسماء",q:"اذكر شيئًا تسويه إذا نسيت اسم الشخص اللي واقف جدامك.",a:[["أتجنب أقول اسمه",32],["أقول: حبيبي أو الغالي",24],["أنتظر أحد يناديه",19],["أسأله بطريقة غير مباشرة",15],["أعرّفه بدون ما أذكر اسمه",10]]},
+      {c:"موقف محرج",q:"اذكر شيئًا تسويه إذا لوحت لشخص واكتشفت أنه كان يلوح للي وراك.",a:[["أكمل التلويح كأني أعرف أحد",31],["ألمس شعري",23],["أمسك التلفون",19],["أضحك على نفسي",15],["أختفي من المكان",12]]},
+      {c:"في السيارة",q:"اذكر شيئًا تسويه في السيارة وتتمنى محد يشوفك.",a:[["أغني بحماس",29],["أحفر في خشمي",25],["أتكلم مع نفسي",19],["أرقص",15],["أسوي تعابير غريبة",12]]},
+      {c:"المطاعم",q:"اذكر شيئًا تقوله في المطعم وبعدها تسوي العكس.",a:[["ما أبي حلا",29],["بطلب شيء خفيف",25],["ما باكل وايد",20],["ما باخذ من أكلك",15],["هذي آخر مرة",11]]},
+      {c:"الصور الجماعية",q:"اذكر شيئًا تسويه عندما يصورون صورة جماعية وما عجبتك صورتك.",a:[["أطلب صورة ثانية",29],["أكبر الصورة على وجهي",24],["أقول: منو صور؟!",20],["أعدل وقفتي للصورة الثانية",16],["أتمنى محد ينزلها",11]]},
+      {c:"التسوق",q:"اذكر شيئًا تدخل المحل عشان تشتريه… وتطلع بخمس أشياء غيره.",a:[["غرض عليه عرض",30],["سناك أو شوكولاتة",24],["عطر أو معطر",19],["شيء للبيت",16],["شيء ما كنت تحتاجه",11]]},
+      {c:"المول",q:"اذكر شيئًا يخليك تدخل المول تقول بس بتمشى… وتطلع بأكياس.",a:[["التخفيضات",31],["محل الملابس",24],["العطور",19],["الأحذية",15],["عرض اشترِ واحد وخذ الثاني",11]]},
+      {c:"الشحنات",q:"اذكر شيئًا تسويه أول ما توصلك شحنة كنت تنتظرها.",a:[["أفتحها فورًا",32],["أصور فتح الصندوق",24],["أجرب الغرض",19],["أتأكد من الطلب",15],["أرمي الكرتون في الزاوية",10]]},
+      {c:"الأكل",q:"اذكر شيئًا تقول إنك بس بتذوقه… وبعدها يختفي نصه.",a:[["الشيبس",30],["الكيك",24],["الشوكولاتة",19],["البطاطس",16],["الحلا",11]]},
+      {c:"الدايت",q:"اذكر شيئًا يخليك تنسى الدايت فورًا.",a:[["الحلا",31],["ريحة الأكل",24],["عزيمة",19],["وجبة سريعة",15],["أقول: ببدأ باچر",11]]},
+      {c:"باركن المول",q:"اذكر شيئًا يسويه الشخص إذا ضيّع سيارته في باركن المول.",a:[["يضغط الريموت",32],["يمشي بين الصفوف",24],["يراجع صورة رقم الموقف",19],["يسأل الأمن",15],["يمشي بثقة وهو ضايع",10]]},
+      {c:"السيارة",q:"اذكر شيئًا تكتشفه في السيارة فقط لما يركب معاك ضيف.",a:[["الأغراض المبعثرة",29],["ريحة غريبة",24],["لمبة تحذير",19],["قوارير الماي الفاضية",16],["البترول شبه خالص",12]]},
+      {c:"القيادة",q:"اذكر شيئًا يخليك تخفض صوت الأغنية وأنت تسوق فجأة.",a:[["أدور المدخل أو المخرج",31],["أشوف دورية",24],["يرن التلفون",19],["أصف السيارة",15],["أسمع صوتًا غريبًا",11]]},
+      {c:"الجيم",q:"اذكر شيئًا يسويه بعض الناس في الجيم أكثر من التمرين.",a:[["يتصورون في المراية",31],["يمسكون التلفون",25],["يسولفون",19],["يختارون الأغنية",15],["استراحة ماي طويلة",10]]},
+      {c:"بداية الرياضة",q:"اذكر شيئًا يشتريه الشخص أول ما يقرر أنه من باچر بيصير رياضي.",a:[["ملابس رياضية",30],["حذاء رياضي",25],["اشتراك جيم",20],["ساعة ذكية",14],["علبة بروتين",11]]},
+      {c:"التمرين",q:"اذكر شيئًا ممكن يخليك توقف التمرين في نصه.",a:[["التعب",31],["مكالمة أو رسالة",24],["شد عضلي",19],["الزحمة على الأجهزة",15],["تذكرت الأكل",11]]},
+      {c:"بعد التمرين",q:"اذكر شيئًا يسويه الشخص بعد تمرين واحد وكأنه صار رياضي محترف.",a:[["ينزل ستوري",30],["يشرب بروتين",24],["يعطي نصائح",20],["يتصور في الجيم",16],["يمشي كأنه بطل كمال أجسام",10]]},
+      {c:"موقف محرج",q:"اذكر موقفًا إذا صار لك تتمنى تختفي خمس ثواني.",a:[["تتعثر قدام الناس",29],["تسلم على الشخص الغلط",24],["تنادي أحد باسم غلط",19],["يطيح منك شيء بصوت قوي",16],["يرن تلفونك في هدوء تام",12]]},
+      {c:"النكت",q:"اذكر شيئًا تسويه إذا قلت نكتة… ومحد ضحك.",a:[["أشرح النكتة",30],["أضحك على نفسي",24],["أقول: خلاص ولا شي",19],["ألوم اللي ما فهموا",15],["أغير الموضوع بسرعة",12]]},
+      {c:"المكالمات",q:"اذكر شيئًا بتسويه إذا اتصل عليك شخص وما رديت واكتشفت أنه يشوفك من بعيد.",a:[["أطالع التلفون بصدمة",30],["أسوي التلفون صامت",24],["ألوح له",19],["أتصل فيه فورًا",16],["أمشي أو أختبئ",11]]},
+      {c:"جيل اليوم",q:"اذكر شيئًا يسويه الشباب اليوم ويخلي الأهل يسألون: ليش؟",a:[["يصورون كل شيء",28],["يمسكون التلفون طول الوقت",24],["يلبسون موضة غريبة",19],["يطلبون كل شيء أونلاين",16],["يشترون قهوة غالية",13]]},
+      {c:"أيام الأهل",q:"اذكر جملة من الأهل تبدأ عادةً بقصة عن كيف كانت الحياة أيامهم.",a:[["على أيامنا…",34],["نحن كنا…",24],["ما كان عندنا…",18],["كنا نمشي…",14],["جيلكم ما يعرف…",10]]}
+    ];
+    function pickQuestions(){const q=[...QUESTION_POOL];for(let i=q.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[q[i],q[j]]=[q[j],q[i]]}return q.slice(0,23)}
+    let QUESTIONS=pickQuestions();
+    const state={qi:0,revealed:[false,false,false,false,false],bank:0,active:0,scores:[0,0],strikes:[0,0],seconds:90,running:false,tick:null};
+    const $=id=>document.getElementById(id);
+
+    function sound(type){
+      const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;const ctx=new AC(),now=ctx.currentTime;
+      const p=(f,s,d,w="sine",v=.13)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type=w;o.frequency.setValueAtTime(f,now+s);g.gain.setValueAtTime(.0001,now+s);g.gain.exponentialRampToValueAtTime(v,now+s+.015);g.gain.exponentialRampToValueAtTime(.0001,now+s+d);o.connect(g).connect(ctx.destination);o.start(now+s);o.stop(now+s+d+.02)};
+      if(type==="correct"){p(523,0,.18);p(659,.12,.2);p(784,.24,.3)}else if(type==="wrong"){p(170,0,.48,"sawtooth",.16);p(128,.12,.44,"square",.08)}else if(type==="buzzer"){p(440,0,.11,"square",.12);p(440,.18,.11,"square",.12)}else if(type==="tick")p(760,0,.07,"sine",.08);else[523,659,784,1047].forEach((f,i)=>p(f,i*.1,.42,"sine",.12));setTimeout(()=>ctx.close(),1300)
+    }
+    function names(){return[$("name0").value||"الفريق الأول",$("name1").value||"الفريق الثاني"]}
+    function save(){localStorage.setItem("noqtaBidayaGame",JSON.stringify({scores:state.scores,names:names()}))}
+    function load(){try{const x=JSON.parse(localStorage.getItem("noqtaBidayaGame"));if(x){state.scores=x.scores||[0,0];$("name0").value=x.names?.[0]||"فريق البداية";$("name1").value=x.names?.[1]||"فريق الحكاية"}}catch(e){}}
+    function renderTeams(){
+      document.querySelectorAll(".team").forEach((el,i)=>el.classList.toggle("active",i===state.active));
+      state.scores.forEach((v,i)=>$("score"+i).textContent=v);$("bank").textContent=state.bank;$("activeLabel").textContent="الفريق النشط: "+names()[state.active];
+      state.strikes.forEach((count,i)=>{$("strikes"+i).innerHTML=[0,1,2].map(x=>`<span class="${count>x?"on":""}">×</span>`).join("")});$("award").disabled=!state.bank;save();
+    }
+    function renderQuestion(){
+      const q=QUESTIONS[state.qi];$("counter").textContent=`السؤال ${state.qi+1} من ${QUESTIONS.length}`;$("category").textContent=q.c;$("question").textContent=q.q;
+      $("board").innerHTML=q.a.map((a,i)=>`<button class="answer ${state.revealed[i]?"revealed":""}" data-i="${i}"><span class="inner"><span class="front"><b>${i+1}</b><small>اضغط للكشف</small></span><span class="back"><span>${a[0]}</span><b>${a[1]}</b></span></span></button>`).join("");
+      $("board").querySelectorAll(".answer").forEach(el=>el.onclick=()=>reveal(+el.dataset.i));$("dots").innerHTML=QUESTIONS.map((_,i)=>`<i class="${i===state.qi?"on":""}"></i>`).join("");renderTeams();
+    }
+    function reveal(i){if(state.revealed[i])return;state.revealed[i]=true;state.bank+=QUESTIONS[state.qi].a[i][1];sound("correct");renderQuestion()}
+    function resetRound(){state.revealed=[false,false,false,false,false];state.bank=0;state.strikes=[0,0];resetTimer();renderQuestion()}
+    function move(d){state.qi=(state.qi+d+QUESTIONS.length)%QUESTIONS.length;resetRound()}
+    function wrong(){if(state.strikes[state.active]>=3)return;const n=state.strikes[state.active]+1;state.strikes[state.active]=n;$("strikeMarks").innerHTML="<span>×</span>".repeat(n);$("strikeOverlay").classList.add("show");sound("wrong");renderTeams();setTimeout(()=>{$("strikeOverlay").classList.remove("show");if(n===3){state.running=false;clearInterval(state.tick);state.active=state.active===0?1:0;$("turnNoticeText").textContent="انتقل السؤال إلى "+names()[state.active];$("turnNotice").classList.add("show");sound("buzzer");renderTeams();setTimeout(()=>$("turnNotice").classList.remove("show"),2300)}},950)}
+    function award(){if(!state.bank)return;const amount=state.bank;state.scores[state.active]+=amount;state.bank=0;$("celebrateText").textContent=`+${amount} نقطة لـ ${names()[state.active]}`;$("celebrate").classList.add("show");sound("win");renderTeams();setTimeout(()=>$("celebrate").classList.remove("show"),2300)}
+    function adjust(n){state.scores[state.active]=Math.max(0,state.scores[state.active]+n);sound("tick");renderTeams()}
+    function renderTimer(){$("seconds").textContent=state.seconds;$("timer").style.setProperty("--p",`${state.seconds/90*360}deg`);$("timer").classList.toggle("danger",state.seconds<=10);$("timerToggle").textContent=state.running?"إيقاف المؤقت":"ابدأ المؤقت"}
+    function toggleTimer(){if(state.seconds===0)state.seconds=90;state.running=!state.running;sound("tick");clearInterval(state.tick);if(state.running)state.tick=setInterval(()=>{state.seconds--;if(state.seconds<=10&&state.seconds>0)sound("tick");if(state.seconds<=0){state.seconds=0;state.running=false;clearInterval(state.tick);sound("buzzer")}renderTimer()},1000);renderTimer()}
+    function resetTimer(){clearInterval(state.tick);state.seconds=90;state.running=false;renderTimer()}
+
+    document.querySelectorAll(".team").forEach(el=>el.onclick=e=>{if(e.target.tagName!=="INPUT"){state.active=+el.dataset.team;renderTeams()}});
+    [$("name0"),$("name1")].forEach(el=>el.oninput=renderTeams);$("prev").onclick=()=>move(-1);$("next").onclick=()=>move(1);$("wrong").onclick=wrong;$("award").onclick=award;$("minus").onclick=()=>adjust(-5);$("plus").onclick=()=>adjust(5);$("timerToggle").onclick=toggleTimer;$("timerReset").onclick=resetTimer;$("buzzer").onclick=$("faceoff").onclick=()=>sound("buzzer");$("fullscreen").onclick=()=>document.documentElement.requestFullscreen?.();
+    $("resetMatch").onclick=()=>{if(confirm("هل تريد تصفير النتائج واختيار 23 سؤالًا عشوائيًا جديدًا؟")){QUESTIONS=pickQuestions();state.scores=[0,0];state.active=0;state.qi=0;resetRound();renderTeams()}};
+    window.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;if("12345".includes(e.key))reveal(+e.key-1);if(e.key.toLowerCase()==="x")wrong();if(e.key.toLowerCase()==="b")sound("buzzer");if(e.key.toLowerCase()==="t")toggleTimer();if(e.key==="ArrowLeft")move(1);if(e.key==="ArrowRight")move(-1);if(e.key.toLowerCase()==="f")document.documentElement.requestFullscreen?.()});
+    load();renderQuestion();renderTimer();
+  </script>
+</body>
+</html>
